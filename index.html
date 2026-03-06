@@ -444,6 +444,7 @@ function showPage(p){
   document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
   document.getElementById('page-'+p).classList.add('active');
   window.scrollTo({top:0,behavior:'instant'});
+  window.location.hash = (p==='home') ? '' : p;
 }
 function goTo(id){
   showPage('home');
@@ -461,6 +462,17 @@ window.addEventListener('scroll',function(){
 });
 window.addEventListener('DOMContentLoaded',function(){
   switchTab('p');
+  var hash=window.location.hash.replace('#','');
+  if(hash && document.getElementById('page-'+hash)){
+    showPage(hash);
+  }
+});
+window.addEventListener('hashchange',function(){
+  var hash=window.location.hash.replace('#','');
+  var page=hash && document.getElementById('page-'+hash) ? hash : 'home';
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
 });
 </script>
 <div id="mobile-menu" style="display:none;position:fixed;top:66px;left:0;right:0;z-index:899;background:#fff;border-bottom:1px solid var(--border);padding:12px 20px;box-shadow:var(--s2)">
